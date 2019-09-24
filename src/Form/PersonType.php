@@ -30,7 +30,7 @@ class PersonType extends AbstractType
                 'label' => false
                 ])
             ->add('birthDate', DateType::class,[
-                'label' => false
+                'label' => false,
             ])
             ->add('email', EmailType::class,[
                 'attr' => array(

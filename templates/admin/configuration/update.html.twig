@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title 'Tous nos biens' %}
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Configurer</h1>
+        <div class="container">
+            {% for message in app.flashes("success") %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+            {{ form_start(form) }}
+
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form_row(form.name) }}
+                </div>
+
+                <div class="col">
+                    {{ form_row(form.value) }}
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button class="btn btn-primary">{{ button | default('Enregistrer') }}</button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}

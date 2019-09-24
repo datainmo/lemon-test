@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Les inscrits' %}
+
+{% block body %}
+
+    <h1>Configuration</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Valeur</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for configuration in configurations %}
+        <tr>
+            <td>{{ configuration.name }}</td>
+            <td>{{ configuration.value }}</td>
+            <td>
+                <a href="{{  path('app_admin_configuration_update', {id : configuration.id}) }}" class="btn btn-secondary">Editer</a>
+            </td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+
+</table>
+
+
+</div>
+
+{% endblock %}

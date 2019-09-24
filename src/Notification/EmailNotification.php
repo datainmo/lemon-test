@@ -10,6 +10,7 @@ namespace App\Notification;
 
 
 use App\Entity\Person;
+use App\Repository\ConfigurationRepository;
 use App\Repository\UserRepository;
 use Twig\Environment;
 
@@ -32,9 +33,9 @@ class EmailNotification
      * EmailNotification constructor.
      * @param \Swift_Mailer $mailer
      * @param Environment $renderer
-     * @param UserRepository $repository
+     * @param ConfigurationRepository $repository
      */
-    public function __construct(\Swift_Mailer $mailer, Environment $renderer, UserRepository $repository)
+    public function __construct(\Swift_Mailer $mailer, Environment $renderer, ConfigurationRepository $repository)
     {
 
         $this->mailer = $mailer;
@@ -62,17 +63,31 @@ class EmailNotification
 
         $this->mailer->send($messageInscrit);
 
-        $user = $this->repository->findBy(['username' => 'admin']);
+        $emailAdmin = $this->getAdminEmail();
         $messageAdmin = (new \Swift_Message('Nouvelle inscription'))
             ->setFrom(['noreply@lemon-intereactive.com' => 'Lemon Interactive'])
-            ->setTo($user[0]->getEmail())
-            ->setReplyTo($user[0]->getEmail())
+            ->setTo($emailAdmin)
+            ->setReplyTo($emailAdmin)
             ->setBody($this->renderer->render('emails/admin.html.twig', [
                 'person' => $person
             ]), 'text/html');
 
         $this->mailer->send($messageAdmin);
 
+    }
+
+    public function getAdminEmail()
+    {
+        $email = $this->repository->findBy(['name' => 'email_administrateur']);
+
+        if(!$email){
+            throw new \Exception("L'email de l'administrateur n'est pas renseigné dans la configuration");
+        }
+        else{
+            $email = $email[0]->getValue();
+        }
+
+        return $email;
     }
 
 }

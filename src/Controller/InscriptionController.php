@@ -70,10 +70,13 @@ class InscriptionController extends AbstractController
         }else{
             $ip = $remote;
         }
-        $ip ='2a01:e35:2e0a:8490:ccc8:97cd:524b:4f0e';
+        //$ip ='2a01:e35:2e0a:8490:ccc8:97cd:524b:4f0e';
 
         $json = file_get_contents("http://ipinfo.io/{$ip}/geo");
         $details = json_decode($json, true);
+        if(!isset($details['country'])){
+            return false;
+        }
 
         return $details['country'];
 

@@ -16,9 +16,12 @@ class SearchPersonType extends AbstractType
         $builder
             ->add('nationality', CountryType::class, [
                 'placeholder' => 'Choisir un pays',
-                'required' => false
+                'required' => false,
+                'label' => false
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,[
+                'label_format' => 'Valider'
+            ])
         ;
     }
 
