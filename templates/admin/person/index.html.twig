@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Les inscrits' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Les inscrits</h1>
+</div>
+<div class="container mt-4">
+    {{ form_start(form) }}
+
+    <div class="form-row align-items-end">
+        <div class="col">
+            {{ form_row(form.nationality) }}
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                {{ form_row(form.submit) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+</div>
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Sexe</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Date de naissance</th>
+            <th>Métier</th>
+            <th>Pays</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in pagination %}
+            <tr>
+                <td>{{ person.genderType }}</td>
+                <td>{{ person.lastname }}</td>
+                <td>{{ person.firstname }}</td>
+                <td>{{ person.email }}</td>
+                <td>{{ person.birthDate | date("d/m/Y") }}</td>
+                <td>{{ person.jobType  }}</td>
+                <td>{{ person.country }}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+</div>
+
+    <script>$(document).ready(function() {
+            $('#search_person_nationality').select2();
+        });</script>
+{% endblock %}
